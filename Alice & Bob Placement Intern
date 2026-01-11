@@ -1,61 +1,45 @@
-# Morse code table for reference 
+# Morse code table for reference
 morse = {
     "A": ".-",   "B": "-...", "C": "-.-.", "D": "-..",  "E": ".",
     "F": "..-.", "G": "--.",  "H": "....", "I": "..",   "J": ".---",
     "K": "-.-",  "L": ".-..", "M": "--",   "N": "-.",   "O": "---",
-    "P": ".--.", "Q": "--.-", "R": ".-.",  "S": "...",
-    "T": "-",    "U": "..-",  "V": "...-", "W": ".--",
+    "P": ".--.", "Q": "--.-", "R": ".-.",  "S": "...",  "T": "-",    "U": "..-",  "V": "...-", "W": ".--",
     "X": "-..-", "Y": "-.--", "Z": "--.."
 }
 
 # Convert to code -> letter: It is crucial for correct decoding of codes
-
 code_to_letter = {code: letter for letter, code in morse.items()}
 
-# Take input:  to ensure no leading/trailing spaces are present 
-
+# Take input: to ensure no leading/trailing spaces are present
 message = input().strip()
 
 answers = []
 
-# Recursive function used here 
-
+# Recursive function used here
 def decode_message(index, current_word):
-
     # Base case: If we've reached the end of the message, add the decoded word
-
-if index == len(message):
+    if index == len(message):
         answers.append(current_word)
         return
 
     # Iterate through possible lengths of Morse code characters
-
-for i in range(index + 1, len(message) + 1):
-
-# Extract a potential Morse code character
-
-potential_code = message[index:i]
+    for i in range(index + 1, len(message) + 1):
+        # Extract a potential Morse code character
+        potential_code = message[index:i]
 
         # Checking if the extracted code is a valid Morse code
-    
-if potential_code in code_to_letter:
-         
-# If valid, it will recursively call the function with updated index and word
-
-decoded_letter = code_to_letter[potential_code]
+        if potential_code in code_to_letter:
+            # If valid, it will recursively call the function with updated index and word
+            decoded_letter = code_to_letter[potential_code]
             decode_message(i, current_word + decoded_letter)
 
-
 # decoding process (starts here)
-
 decode_message(0, "")
 
 # Sorting of decoded words alphabetically
-
 answers.sort()
 
 # Print the decoded words basically output to safeguard them for empty result
-
 if answers:
     for word in answers:
         print(word)
